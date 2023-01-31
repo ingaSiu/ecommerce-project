@@ -8,20 +8,19 @@ const Home = () => {
   const { products } = useContext(ProductContext);
   const uniqueCategories = getUniqueArrItems(products.map((product) => product.type));
 
-  //
   const categories = uniqueCategories.map((category) => ({
     name: category,
     image: products.find((product) => product.type === category).picUrl,
   }));
-  console.log(categories);
+
   return (
-    <div>
+    <Container>
       <ProductContainer>
         {categories.map((category) => (
-          <ProductCategory key={category.name} name={category.name} image={JSON.parse(category.image)[0]} />
+          <ProductCategory key={category.name} name={category.name} image={category.image[0]} />
         ))}
       </ProductContainer>
-    </div>
+    </Container>
   );
 };
 
@@ -32,5 +31,10 @@ const ProductContainer = styled.div`
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #fafafa;
+`;
+
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
 `;

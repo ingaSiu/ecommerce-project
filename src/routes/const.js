@@ -1,8 +1,11 @@
 import Home from '../pages/Home/Home';
 import Products from '../pages/Home/Products/Products';
 
-const HOME_PATH = '/';
-const PRODUCTS_LIST = '/:category';
+export const HOME_PATH = '/';
+export const PRODUCTS_LIST_PATH = `${HOME_PATH}:category`;
+
+// kai prisides dar /:category/:itemId ,tai
+// export const ITEM_PATH = `${PRODUCT_LIST_PATH}:itemId
 
 export const routes = [
   {
@@ -10,7 +13,7 @@ export const routes = [
     Component: Home,
   },
   {
-    path: PRODUCTS_LIST,
+    path: PRODUCTS_LIST_PATH,
     Component: Products,
   },
 ];
