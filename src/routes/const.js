@@ -1,9 +1,11 @@
 import Home from '../pages/Home/Home';
-import Products from '../pages/Home/Products/Products';
+import Products from '../pages/Products/Products';
 import MainLayout from '../layouts/MainLayout';
+import Product from '../pages/Product/Product';
 
 export const HOME_PATH = '/';
 export const PRODUCTS_LIST_PATH = `${HOME_PATH}:category`;
+export const PRODUCT_PATH = `${PRODUCTS_LIST_PATH}/:productId`;
 
 // kai prisides dar /:category/:itemId ,tai
 // export const ITEM_PATH = `${PRODUCT_LIST_PATH}:itemId
@@ -20,6 +22,10 @@ export const mainLayoutRoutes = {
     {
       path: PRODUCTS_LIST_PATH,
       Component: Products,
+    },
+    {
+      path: PRODUCT_PATH,
+      Component: Product,
     },
   ],
 };

@@ -1,18 +1,19 @@
 import { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ProductContext } from '../../../contexts/ProductContext';
-import { capitalizeFirstLetter } from '../../../utils/string';
+import { useParams, useNavigate, generatePath } from 'react-router-dom';
+import { ProductContext } from '../../contexts/ProductContext';
+import { capitalizeFirstLetter } from '../../utils/string';
 import styled from 'styled-components';
 import Select from 'react-select';
-import { getUniqueArrItems } from '../../../utils/array';
-import { screenSize } from '../../../consts/mediaQueries';
-import { lightBorderColor } from '../../../consts/color';
+import { getUniqueArrItems } from '../../utils/array';
+import { screenSize } from '../../consts/mediaQueries';
+import { lightBorderColor } from '../../consts/color';
+import { PRODUCT_PATH } from '../../routes/const';
 
 const Products = () => {
   const { category } = useParams();
   const { products } = useContext(ProductContext);
   const [selectedColors, setSelectedColors] = useState([]);
-
+  const navigate = useNavigate();
   // viena versija
   // const categoryProducts = products.filter((product) => product.type === category);
   // console.log(categoryProducts);
@@ -38,6 +39,11 @@ const Products = () => {
 
   const filteredProducts = filteredByColorProducts.length ? filteredByColorProducts : categoryProducts;
 
+  const navigateToProduct = (category, productId) => {
+    const path = generatePath(PRODUCT_PATH, { category, productId });
+    navigate(path);
+  };
+
   return (
     <div>
       <FiltersContainer>
@@ -47,7 +53,7 @@ const Products = () => {
       </FiltersContainer>
       <ProductsContainer>
         {filteredProducts.map((product) => (
-          <ProductItem key={product.id}>
+          <ProductItem key={product.id} onClick={() => navigateToProduct(category, product.id)}>
             <img src={product.picUrl[0]} alt={product.name} />
 
             <ProductProperty>{capitalizeFirstLetter(product.name.toLowerCase())} </ProductProperty>
@@ -63,9 +69,9 @@ const Products = () => {
 export default Products;
 
 const FiltersContainer = styled.div`
-  padding: 40px 40px 0 40px;
   grid-template-columns: repeat(4, 1fr);
   display: grid;
+  margin-bottom: 40px;
   @media (min-width: ${screenSize.tablet}) and (max-width: ${screenSize.laptop}) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -80,7 +86,7 @@ const Filter = styled.div`
 const ProductsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  padding: 40px;
+
   @media (min-width: ${screenSize.tablet}) and (max-width: ${screenSize.laptop}) {
     grid-template-columns: repeat(2, 1fr);
   }

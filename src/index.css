@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
 
-body {
+body,
+input {
   margin: 0;
   font-family: 'Roboto Condensed', sans-serif;
 
@@ -13,4 +14,3 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-

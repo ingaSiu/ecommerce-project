@@ -26,15 +26,15 @@ const Home = () => {
 
 export default Home;
 
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+`;
+
 const ProductContainer = styled.div`
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
-`;
-
-const Container = styled.div`
-  height: 100vh;
-  display: flex;
-  align-items: center;
 `;
