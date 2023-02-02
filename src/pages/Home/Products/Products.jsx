@@ -1,13 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProductContext } from '../../../contexts/ProductContext';
 import { capitalizeFirstLetter } from '../../../utils/string';
 import styled from 'styled-components';
 import Select from 'react-select';
+import { getUniqueArrItems } from '../../../utils/array';
+import { screenSize } from '../../../consts/mediaQueries';
+import { lightBorderColor } from '../../../consts/color';
 
 const Products = () => {
   const { category } = useParams();
   const { products } = useContext(ProductContext);
+  const [selectedColors, setSelectedColors] = useState([]);
 
   // viena versija
   // const categoryProducts = products.filter((product) => product.type === category);
@@ -16,17 +20,33 @@ const Products = () => {
   // kita versija:
   const isCategory = (product) => product.type === category;
   const categoryProducts = products.filter(isCategory);
-  console.log(categoryProducts);
+
+  const colors = categoryProducts.map((product) => product.color.toLowerCase());
+
+  const uniqueColors = getUniqueArrItems(colors);
+  const colorOptions = uniqueColors.map((color) => ({
+    value: color,
+    label: capitalizeFirstLetter(color),
+  }));
+  console.log(selectedColors);
+
+  const selectedColorsArray = selectedColors.map((color) => color.value);
+  // ['red', 'yellow']
+  const filteredByColorProducts = categoryProducts.filter((product) =>
+    selectedColorsArray.includes(product.color.toLowerCase()),
+  );
+
+  const filteredProducts = filteredByColorProducts.length ? filteredByColorProducts : categoryProducts;
 
   return (
     <div>
       <FiltersContainer>
         <Filter>
-          <Select isMulti name="colors" options={[]} />
+          <Select isMulti name="colors" options={colorOptions} value={selectedColors} onChange={setSelectedColors} />
         </Filter>
       </FiltersContainer>
       <ProductsContainer>
-        {categoryProducts.map((product) => (
+        {filteredProducts.map((product) => (
           <ProductItem key={product.id}>
             <img src={product.picUrl[0]} alt={product.name} />
 
@@ -43,19 +63,30 @@ const Products = () => {
 export default Products;
 
 const FiltersContainer = styled.div`
-  padding-left: 40px;
-  padding-top: 40px;
-  padding-right: 60px;
-  display: flex;
+  padding: 40px 40px 0 40px;
+  grid-template-columns: repeat(4, 1fr);
+  display: grid;
+  @media (min-width: ${screenSize.tablet}) and (max-width: ${screenSize.laptop}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: ${screenSize.tablet}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const Filter = styled.div`
-  width: 250px;
+  margin-right: 24px;
 `;
 const ProductsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding: 40px;
+  @media (min-width: ${screenSize.tablet}) and (max-width: ${screenSize.laptop}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: ${screenSize.tablet}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const ProductItem = styled.div`
@@ -65,7 +96,7 @@ const ProductItem = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  border: 1px solid #e7e3e1;
+  border: 1px solid ${lightBorderColor};
   img {
     flex: 1;
     width: 100%;
