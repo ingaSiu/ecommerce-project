@@ -5,21 +5,32 @@ import styled from 'styled-components';
 import ProductCategory from './ProductCategory';
 
 const Home = () => {
-  const { products } = useContext(ProductContext);
+  const { products, isLoading, error } = useContext(ProductContext);
   const uniqueCategories = getUniqueArrItems(products.map((product) => product.type));
 
   const categories = uniqueCategories.map((category) => ({
     name: category,
     image: products.find((product) => product.type === category).picUrl,
   }));
-
+  //vienas is budu prie returna rasyti
+  // if (isLoading) {
+  //   return 'Loading...';
+  // }
+  if (error) {
+    return error;
+  }
   return (
+    //del stiliaus galima apsirasyti ir cia: bet cia nelabai graziai rasosi
     <Container>
-      <ProductContainer>
-        {categories.map((category) => (
-          <ProductCategory key={category.name} name={category.name} image={category.image[0]} />
-        ))}
-      </ProductContainer>
+      {isLoading ? (
+        'Loading...'
+      ) : (
+        <ProductContainer>
+          {categories.map((category) => (
+            <ProductCategory key={category.name} name={category.name} image={category.image[0]} />
+          ))}
+        </ProductContainer>
+      )}
     </Container>
   );
 };

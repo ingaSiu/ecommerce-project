@@ -17,7 +17,6 @@ export default SearchBar;
 
 const InputWrapper = styled.div`
   position: relative;
-  border-radius: 4px;
 
   svg {
     position: absolute;
@@ -30,6 +29,7 @@ const InputWrapper = styled.div`
 const Input = styled.input`
   background-color: ${searchBgColor};
   border: none;
+  border-radius: 4px;
   outline: none;
   padding: 10px 40px;
 `;

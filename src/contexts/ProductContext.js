@@ -4,8 +4,10 @@ import axios from 'axios';
 const ProductContext = createContext();
 
 const ProductProvider = ({ children }) => {
+  // jei products naudojami map, tai pradine reiksme [] => empty array
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const transformData = (products) => {
     return products.map((product) => ({
@@ -22,13 +24,16 @@ const ProductProvider = ({ children }) => {
       .then((response) => {
         const transformedData = transformData(response.data.data);
         setProducts(transformedData);
-        setIsLoading(false);
       })
       .catch((error) => {
+        setError('Could not find products');
         console.error('Products:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
-  return <ProductContext.Provider value={{ products, isLoading }}>{children}</ProductContext.Provider>;
+  return <ProductContext.Provider value={{ products, isLoading, error }}>{children}</ProductContext.Provider>;
 };
 
 export { ProductContext, ProductProvider };
