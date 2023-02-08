@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { lightBorderColor } from '../consts/color';
 import SearchBar from '../components/SearchBar/SearchBar';
 import { Link } from 'react-router-dom';
 import { HOME_PATH } from '../routes/const';
