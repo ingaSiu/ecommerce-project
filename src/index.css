@@ -12,6 +12,10 @@ button {
   color: #887569;
 }
 
+input {
+  box-sizing: border-box;
+}
+
 h1,
 h2,
 h3,
@@ -21,6 +25,11 @@ h6,
 p,
 ul {
   margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

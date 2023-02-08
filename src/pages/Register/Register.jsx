@@ -4,17 +4,20 @@ import styled from 'styled-components';
 import { screenSize } from '../../consts/mediaQueries';
 import Button from '../../components/Button/Button';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
-import { REGISTER } from '../../routes/const';
 
-//i skliaustelius rasom message
+import { StyledLink } from '../Login/Login';
+import { LOGIN } from '../../routes/const';
 const validationSchema = Yup.object().shape({
+  firstName: Yup.string().required('Required'),
+  lastName: Yup.string().required('Required'),
   email: Yup.string().email('Invalid Email').required('Required'),
   password: Yup.string().required('Required'),
+  confirmPassword: Yup.string()
+    .required('Please retype your password.')
+    .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
 });
 
-const Login = () => {
-  // issitraukiam values, galeasim gauti reiksmes, kurias irasem formoje
+const Register = () => {
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
@@ -23,41 +26,33 @@ const Login = () => {
     }, 2000);
     console.log(values);
   };
-
+  //text laukeliai yra default in formik todel nebuti type rasyt
   return (
-    //nurodome pradines reiksmes: initialValue
-    // validate => validacija, kad tusti laukeliai oncloick nepraeitu kaip reiksmes
     <div>
       <Formik
         initialValues={{
+          firstName: '',
+          lastName: '',
           email: '',
           password: '',
+          confirmPassword: '',
         }}
         validationSchema={validationSchema}
-        // validacija (dauguma atveju per Yup schema), bet sudetingesniems atvejams:
-        // validate={(values) => {
-        //   const errors = {};
-        //   if (!values.email) {
-        //     errors.email = 'Required';
-        //   }
-        //   if (!values.password) {
-        //     errors.password = 'Required';
-        //   }
-        //   console.log(errors);
-        //   return errors;
-        // }}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
           <StyledForm>
-            <Title>Login</Title>
+            <Title>Register your account</Title>
+            <FormikInput name="firstName" placeholder="First Name" />
+            <FormikInput name="lastName" placeholder="Last Name" />
             <FormikInput type="email" name="email" placeholder="Email" />
             <FormikInput type="password" name="password" placeholder="Password" />
+            <FormikInput type="password" name="confirmPassword" placeholder="Repeat your password" />
 
             <Button type="submit" disabled={isSubmitting}>
-              Login
+              Submit
             </Button>
-            <StyledLink to={REGISTER}>Sign up</StyledLink>
+            <StyledLink to={LOGIN}>Sign in</StyledLink>
           </StyledForm>
         )}
       </Formik>
@@ -65,7 +60,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
 
 const StyledForm = styled(Form)`
   max-width: 768px;
@@ -80,9 +75,4 @@ const Title = styled.p`
   font-size: 24px;
   text-align: center;
   margin-bottom: 16px;
-`;
-
-export const StyledLink = styled(Link)`
-  text-align: center;
-  margin-top: 16px;
 `;
