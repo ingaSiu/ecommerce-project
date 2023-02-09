@@ -10,8 +10,8 @@ export const HOME_PATH = '/';
 export const PRODUCTS_LIST_PATH = `${HOME_PATH}category/:category`;
 export const PRODUCT_PATH = `${PRODUCTS_LIST_PATH}/:productId`;
 export const CART_PATH = `${HOME_PATH}cart`;
-export const LOGIN = `${HOME_PATH}login`;
-export const REGISTER = `${HOME_PATH}register`;
+export const LOGIN_PATH = `${HOME_PATH}login`;
+export const REGISTER_PATH = `${HOME_PATH}register`;
 
 // kai prisides dar /:category/:itemId ,tai
 // export const ITEM_PATH = `${PRODUCT_LIST_PATH}:itemId
@@ -38,11 +38,11 @@ export const mainLayoutRoutes = {
       Component: Cart,
     },
     {
-      path: LOGIN,
+      path: LOGIN_PATH,
       Component: Login,
     },
     {
-      path: REGISTER,
+      path: REGISTER_PATH,
       Component: Register,
     },
   ],

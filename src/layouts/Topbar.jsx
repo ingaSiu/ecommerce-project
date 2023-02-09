@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import SearchBar from '../components/SearchBar/SearchBar';
 import { Link } from 'react-router-dom';
-import { HOME_PATH } from '../routes/const';
-
+import { CART_PATH, HOME_PATH } from '../routes/const';
+import { FaShoppingCart } from 'react-icons/fa';
 const Topbar = () => {
   return (
     <Container>
@@ -10,12 +10,24 @@ const Topbar = () => {
       <Logo as={Link} to={HOME_PATH}>
         POHSE
       </Logo>
-      <SearchBar></SearchBar>
+      <ItemContainer>
+        {' '}
+        <SearchBar></SearchBar>
+        <Link to={CART_PATH}>
+          <FaShoppingCart fontSize={20} />
+        </Link>
+      </ItemContainer>
     </Container>
   );
 };
 
 export default Topbar;
+
+const ItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
 
 const Container = styled.div`
   padding: 6px 30px;

@@ -5,7 +5,7 @@ import { screenSize } from '../../consts/mediaQueries';
 import Button from '../../components/Button/Button';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import { REGISTER } from '../../routes/const';
+import { REGISTER_PATH } from '../../routes/const';
 
 //i skliaustelius rasom message
 const validationSchema = Yup.object().shape({
@@ -57,7 +57,7 @@ const Login = () => {
             <Button type="submit" disabled={isSubmitting}>
               Login
             </Button>
-            <StyledLink to={REGISTER}>Sign up</StyledLink>
+            <StyledLink to={REGISTER_PATH}>Sign up</StyledLink>
           </StyledForm>
         )}
       </Formik>

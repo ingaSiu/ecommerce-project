@@ -4,26 +4,32 @@ import styled from 'styled-components';
 import { screenSize } from '../../consts/mediaQueries';
 import Button from '../../components/Button/Button';
 import * as Yup from 'yup';
-
+import { createUser } from '../../api/user';
+import { useNavigate } from 'react-router-dom';
 import { StyledLink } from '../Login/Login';
-import { LOGIN } from '../../routes/const';
+import { LOGIN_PATH } from '../../routes/const';
+
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('Required'),
-  lastName: Yup.string().required('Required'),
+  first_name: Yup.string().required('Required'),
+  last_name: Yup.string().required('Required'),
   email: Yup.string().email('Invalid Email').required('Required'),
   password: Yup.string().required('Required'),
-  confirmPassword: Yup.string()
+  confirm_password: Yup.string()
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.'),
 });
 
 const Register = () => {
+  const navigate = useNavigate();
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-      resetForm();
-    }, 2000);
+    const { confirm_password, ...newUser } = values;
+    createUser(newUser)
+      .then((response) => {
+        navigate(LOGIN_PATH);
+      })
+      .catch((error) => {
+        console.error('failed to create user:', error);
+      });
     console.log(values);
   };
   //text laukeliai yra default in formik todel nebuti type rasyt
@@ -31,11 +37,11 @@ const Register = () => {
     <div>
       <Formik
         initialValues={{
-          firstName: '',
-          lastName: '',
+          first_name: '',
+          last_name: '',
           email: '',
           password: '',
-          confirmPassword: '',
+          confirm_password: '',
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -43,16 +49,16 @@ const Register = () => {
         {({ isSubmitting }) => (
           <StyledForm>
             <Title>Register your account</Title>
-            <FormikInput name="firstName" placeholder="First Name" />
-            <FormikInput name="lastName" placeholder="Last Name" />
+            <FormikInput name="first_name" placeholder="First Name" />
+            <FormikInput name="last_name" placeholder="Last Name" />
             <FormikInput type="email" name="email" placeholder="Email" />
             <FormikInput type="password" name="password" placeholder="Password" />
-            <FormikInput type="password" name="confirmPassword" placeholder="Repeat your password" />
+            <FormikInput type="password" name="confirm_password" placeholder="Repeat your password" />
 
             <Button type="submit" disabled={isSubmitting}>
               Submit
             </Button>
-            <StyledLink to={LOGIN}>Sign in</StyledLink>
+            <StyledLink to={LOGIN_PATH}>Sign in</StyledLink>
           </StyledForm>
         )}
       </Formik>
