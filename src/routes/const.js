@@ -5,6 +5,7 @@ import Product from '../pages/Product/Product';
 import Cart from '../pages/Cart/Cart';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
+import Checkout from '../pages/Checkout/Checkout';
 
 export const HOME_PATH = '/';
 export const PRODUCTS_LIST_PATH = `${HOME_PATH}category/:category`;
@@ -12,6 +13,7 @@ export const PRODUCT_PATH = `${PRODUCTS_LIST_PATH}/:productId`;
 export const CART_PATH = `${HOME_PATH}cart`;
 export const LOGIN_PATH = `${HOME_PATH}login`;
 export const REGISTER_PATH = `${HOME_PATH}register`;
+export const CHECKOUT_PATH = `${HOME_PATH}checkout`;
 
 // kai prisides dar /:category/:itemId ,tai
 // export const ITEM_PATH = `${PRODUCT_LIST_PATH}:itemId
@@ -44,6 +46,10 @@ export const mainLayoutRoutes = {
     {
       path: REGISTER_PATH,
       Component: Register,
+    },
+    {
+      path: CHECKOUT_PATH,
+      Component: Checkout,
     },
   ],
 };
