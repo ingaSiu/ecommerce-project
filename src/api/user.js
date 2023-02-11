@@ -6,8 +6,8 @@ export const fetchUsers = () => {
   return axios.get(USERS_API_URL).then((response) => response.data.data);
 };
 
-export const createUser = (newUser) => {
-  return axios.post(USERS_API_URL, newUser).then((response) => response.data);
+export const createUser = (user) => {
+  return axios.post(USERS_API_URL, user).then((response) => response.data);
 };
 
 export const loginUser = async (loggingUser) => {
@@ -15,11 +15,7 @@ export const loginUser = async (loggingUser) => {
   return new Promise((resolve, reject) => {
     const { email, password } = loggingUser;
     const userChecker = (user) => user.email === email && user.password === password;
-    const userExists = users.some(userChecker);
-    if (userExists) {
-      resolve();
-    } else {
-      resolve('Invalid credentials');
-    }
+    const existingUser = users.find(userChecker);
+    existingUser ? resolve(existingUser) : reject('Invalid credentials');
   });
 };
