@@ -21,14 +21,14 @@ const validationSchema = Yup.object().shape({
 
 const Register = () => {
   const navigate = useNavigate();
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    const { confirm_password, ...newUser } = values;
-    createUser(newUser)
-      .then((response) => {
+  const handleSubmit = (values) => {
+    const { confirm_password, ...user } = values;
+    createUser(user)
+      .then(() => {
         navigate(LOGIN_PATH);
       })
       .catch((error) => {
-        console.error('failed to create user:', error);
+        console.error('Failed to create user:', error);
       });
     console.log(values);
   };

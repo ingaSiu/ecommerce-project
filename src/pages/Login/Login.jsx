@@ -1,11 +1,14 @@
 import { Formik, Form } from 'formik';
-import FormikInput from '../../components/Formik/FormikInput';
-import styled from 'styled-components';
-import { screenSize } from '../../consts/mediaQueries';
-import Button from '../../components/Button/Button';
+import { useContext } from 'react';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
-import { REGISTER_PATH } from '../../routes/const';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import FormikInput from '../../components/Formik/FormikInput';
+import Button from '../../components/Button/Button';
+import { screenSize } from '../../consts/mediaQueries';
+import { CHECKOUT_PATH, REGISTER_PATH } from '../../routes/const';
+import { loginUser } from '../../api/user';
+import { UserContext } from '../../contexts/UserContext';
 
 //i skliaustelius rasom message
 const validationSchema = Yup.object().shape({
@@ -15,13 +18,19 @@ const validationSchema = Yup.object().shape({
 
 const Login = () => {
   // issitraukiam values, galeasim gauti reiksmes, kurias irasem formoje
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-      resetForm();
-    }, 2000);
-    console.log(values);
+
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = (values) => {
+    loginUser(values)
+      .then((response) => {
+        setUser(response);
+        navigate(CHECKOUT_PATH);
+      })
+      .catch((error) => {
+        console.log('Failed to log in:', error);
+      });
   };
 
   return (
