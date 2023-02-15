@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { screenSize } from '../../consts/mediaQueries';
 import Button from '../../components/Button/Button';
 import * as Yup from 'yup';
-import { createUser } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
 import { StyledLink } from '../Login/Login';
 import { LOGIN_PATH } from '../../routes/const';
+import { useCreateUser } from '../../hooks/user';
 
 const validationSchema = Yup.object().shape({
   first_name: Yup.string().required('Required'),
@@ -21,6 +21,9 @@ const validationSchema = Yup.object().shape({
 
 const Register = () => {
   const navigate = useNavigate();
+
+  const { mutateAsync: createUser } = useCreateUser();
+
   const handleSubmit = (values) => {
     const { confirm_password, ...user } = values;
     createUser(user)

@@ -1,11 +1,14 @@
-import { useContext } from 'react';
-import { ProductContext } from '../../contexts/ProductContext';
 import { getUniqueArrItems } from '../../utils/array';
 import styled from 'styled-components';
 import ProductCategory from './ProductCategory';
+import { useTestData } from '../../hooks/test';
+import { useProducts } from '../../hooks/products';
 
 const Home = () => {
-  const { products, isLoading, error } = useContext(ProductContext);
+  const { data, isLoading, error } = useProducts();
+  const products = data || [];
+  const { data: testData, isLoading: testLoading } = useTestData();
+
   const uniqueCategories = getUniqueArrItems(products.map((product) => product.type));
 
   const categories = uniqueCategories.map((category) => ({
@@ -17,7 +20,7 @@ const Home = () => {
   //   return 'Loading...';
   // }
   if (error) {
-    return error;
+    return 'Could not get the product';
   }
   return (
     //del stiliaus galima apsirasyti ir cia: bet cia nelabai graziai rasosi

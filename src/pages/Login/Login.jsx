@@ -9,6 +9,7 @@ import { screenSize } from '../../consts/mediaQueries';
 import { CHECKOUT_PATH, REGISTER_PATH } from '../../routes/const';
 import { loginUser } from '../../api/user';
 import { UserContext } from '../../contexts/UserContext';
+import { useLoginUser } from '../../hooks/user';
 
 //i skliaustelius rasom message
 const validationSchema = Yup.object().shape({
@@ -20,6 +21,7 @@ const Login = () => {
   // issitraukiam values, galeasim gauti reiksmes, kurias irasem formoje
 
   const { setUser } = useContext(UserContext);
+  const { mutateAsync: loginUser } = useLoginUser();
   const navigate = useNavigate();
 
   const handleSubmit = (values) => {
