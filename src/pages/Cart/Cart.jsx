@@ -5,7 +5,6 @@
 // 4.AuthContext susitvarkom, kad saugotu user
 
 import { useContext } from 'react';
-import { ProductContext } from '../../contexts/ProductContext';
 import styled from 'styled-components';
 import { euroSymbol } from '../../consts/currency';
 import { screenSize } from '../../consts/mediaQueries';
@@ -13,14 +12,11 @@ import Button from '../../components/Button/Button';
 import { Link } from 'react-router-dom';
 import { LOGIN_PATH, CHECKOUT_PATH } from '../../routes/const';
 import { UserContext } from '../../contexts/UserContext';
-import { useProducts } from '../../hooks/products';
+import { CartContext } from '../../contexts/CartContext';
 
 const Cart = () => {
-  const { data, isLoading, error } = useProducts();
-  const products = data || [];
+  const { cartItems } = useContext(CartContext);
   const { isLoggedIn } = useContext(UserContext);
-  const cartProducts = products.slice(0, 2);
-  console.log(cartProducts);
 
   return (
     <Container>
@@ -29,7 +25,7 @@ const Cart = () => {
         <p>Item are reserved for 30 minutes</p>
       </Header>
       <CartContainer>
-        {cartProducts.map((product) => (
+        {cartItems.map((product) => (
           <CartItem key={product.id}>
             <img src={product.picUrl[0]} alt={product.name} />
             <div>
@@ -40,6 +36,7 @@ const Cart = () => {
               <p>{product.name}</p>
               <CartItemColor>{product.color}</CartItemColor>
             </div>
+            <ItemQuantity>x{product.quantity}</ItemQuantity>
           </CartItem>
         ))}
       </CartContainer>
@@ -98,4 +95,10 @@ const CartItemColor = styled.p`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+const ItemQuantity = styled.div`
+  flex: 1;
+  align-self: center;
+  margin-right: 32px;
+  text-align: right;
 `;
