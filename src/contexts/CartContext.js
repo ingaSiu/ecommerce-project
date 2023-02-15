@@ -1,13 +1,15 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
+import { useLocalStorage } from '../hooks/localStorage';
 
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useLocalStorage('cartItems', []);
 
   const handleAddToCart = (cartItem) => {
     const hasEqualId = (cItem) => cItem.id === cartItem.id;
     const alreadyInCartItem = cartItems.find(hasEqualId);
+
     if (alreadyInCartItem) {
       // update qunatity n +1n
       setCartItems((prevItems) =>
