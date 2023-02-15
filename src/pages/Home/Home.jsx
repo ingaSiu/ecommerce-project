@@ -7,6 +7,7 @@ import { useProducts } from '../../hooks/products';
 const Home = () => {
   const { data, isLoading, error } = useProducts();
   const products = data || [];
+
   const { data: testData, isLoading: testLoading } = useTestData();
 
   const uniqueCategories = getUniqueArrItems(products.map((product) => product.type));
