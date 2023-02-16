@@ -20,8 +20,11 @@ const CartProvider = ({ children }) => {
       setCartItems((prevItems) => [...prevItems, item]);
     }
   };
+  const resetCart = () => {
+    setCartItems([]);
+  };
 
-  return <CartContext.Provider value={{ cartItems, handleAddToCart }}> {children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ cartItems, handleAddToCart, resetCart }}> {children}</CartContext.Provider>;
 };
 
 export { CartContext, CartProvider };

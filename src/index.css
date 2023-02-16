@@ -14,9 +14,10 @@ button {
 
 input {
   box-sizing: border-box;
-}
 
-h1,
+  -moz-appearance: textfield;
+}
+​​h1,
 h2,
 h3,
 h4,
