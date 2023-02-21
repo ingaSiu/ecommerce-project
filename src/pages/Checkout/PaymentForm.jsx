@@ -8,6 +8,9 @@ import { lightBorderColor } from '../../consts/color';
 import { requiredField } from '../../consts/validations';
 import FormikSelect from '../../components/Formik/FormikSelect';
 import { CartContext } from '../../contexts/CartContext';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { HOME_PATH } from '../../routes/const';
 
 const validationSchema = Yup.object().shape({
   country: Yup.object().required(requiredField),
@@ -23,8 +26,11 @@ const validationSchema = Yup.object().shape({
 
 const PaymentForm = () => {
   const { resetCart } = useContext(CartContext);
+  const navigate = useNavigate();
   const handleSubmit = (values) => {
     resetCart();
+    navigate(HOME_PATH);
+    toast.success('Confirmed purchases');
     console.log(values);
   };
 

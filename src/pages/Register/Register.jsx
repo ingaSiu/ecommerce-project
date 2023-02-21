@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { StyledLink } from '../Login/Login';
 import { LOGIN_PATH } from '../../routes/const';
 import { useCreateUser } from '../../hooks/user';
+import { toast } from 'react-hot-toast';
 
 const validationSchema = Yup.object().shape({
   first_name: Yup.string().required('Required'),
@@ -29,9 +30,11 @@ const Register = () => {
     createUser(user)
       .then(() => {
         navigate(LOGIN_PATH);
+        toast.success('Succesfull registration');
       })
       .catch((error) => {
         console.error('Failed to create user:', error);
+        toast.error('Failed to create user');
       });
     console.log(values);
   };
