@@ -1,23 +1,26 @@
 import styled from 'styled-components';
-import SearchBar from '../components/SearchBar/SearchBar';
 import { Link } from 'react-router-dom';
 import { CART_PATH, HOME_PATH } from '../routes/const';
 import { FaShoppingCart } from 'react-icons/fa';
+import EnhancedSearchBar from '../components/SearchBar/EnhancedSearchBar';
+
 const Topbar = () => {
   return (
-    <Container>
-      <NavigationItem>Categories</NavigationItem>
-      <Logo as={Link} to={HOME_PATH}>
-        POHSE
-      </Logo>
-      <ItemContainer>
-        {' '}
-        <SearchBar></SearchBar>
-        <Link to={CART_PATH}>
-          <FaShoppingCart fontSize={20} />
-        </Link>
-      </ItemContainer>
-    </Container>
+    <>
+      <Container>
+        <NavigationItem>Categories</NavigationItem>
+        <Logo as={Link} to={HOME_PATH}>
+          POHSE
+        </Logo>
+        <ItemContainer>
+          {' '}
+          <EnhancedSearchBar />
+          <Link to={CART_PATH}>
+            <FaShoppingCart fontSize={20} />
+          </Link>
+        </ItemContainer>
+      </Container>
+    </>
   );
 };
 
