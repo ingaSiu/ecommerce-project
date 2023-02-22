@@ -15,7 +15,6 @@ const CategoriesButton = () => {
   const uniqueCategories = getUniqueArrItems(products.map((product) => product.type));
 
   return (
-    // prie <p elemento dar gali buti: onMouseLeave={() => setHovered(false)}
     <Popover
       isOpen={hovered}
       positions={['bottom', 'left', 'right']}
@@ -23,7 +22,7 @@ const CategoriesButton = () => {
       content={
         <ContentContainer onMouseLeave={() => setHovered(false)}>
           {uniqueCategories.map((category) => (
-            <p key={category} onClick={setHovered(false)}>
+            <p key={category} onClick={() => setHovered(false)}>
               <Link to={generatePath(PRODUCTS_LIST_PATH, { category })}>{category}</Link>
             </p>
           ))}
