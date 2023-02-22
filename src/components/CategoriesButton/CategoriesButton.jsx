@@ -15,21 +15,22 @@ const CategoriesButton = () => {
   const uniqueCategories = getUniqueArrItems(products.map((product) => product.type));
 
   return (
+    // prie <p elemento dar gali buti: onMouseLeave={() => setHovered(false)}
     <Popover
       isOpen={hovered}
-      positions={['top', 'bottom', 'left', 'right']}
+      positions={['bottom', 'left', 'right']}
       onClickOutside={() => setHovered(false)}
       content={
-        <ContentContainer>
+        <ContentContainer onMouseLeave={() => setHovered(false)}>
           {uniqueCategories.map((category) => (
-            <p key={category} onMouseLeave={() => setHovered(false)}>
+            <p key={category} onClick={setHovered(false)}>
               <Link to={generatePath(PRODUCTS_LIST_PATH, { category })}>{category}</Link>
             </p>
           ))}
         </ContentContainer>
       }
     >
-      <Container onMouseOver={() => setHovered(true)}>Categories</Container>
+      <Container onMouseEnter={() => setHovered(true)}>Categories</Container>
     </Popover>
   );
 };
@@ -41,14 +42,15 @@ const Container = styled.p`
   cursor: pointer;
 `;
 const ContentContainer = styled.div`
-  height: 135px;
   background-color: #ffffff;
   border: 1px solid ${lightBorderColor};
   border-radius: 5px;
   width: 205px;
+  margin-left: 24px;
+  margin-top: 4px;
   p {
-    padding-left: 5px;
     padding-top: 8px;
     font-size: 13px;
+    text-transform: uppercase;
   }
 `;
